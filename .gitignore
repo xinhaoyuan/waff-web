@@ -1,3 +1,3 @@
 content/*
-data/*.ch*
+data/*/*.ch*
 cgi-bin/waff
