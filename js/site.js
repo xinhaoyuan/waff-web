@@ -78,8 +78,8 @@ $(document).ready(function () {
             alert("请输入长度在(0,10)之间名字");
         else
         {
+            $("#login-container").hide();
             doAction(function () {
-                $("#login-container").hide();
                 $("#scene-container").show();
             });
         }
