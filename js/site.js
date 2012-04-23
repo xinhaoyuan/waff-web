@@ -74,7 +74,7 @@ function doAction(succ)
 $(document).ready(function () {
     $("#button-start").click(function () {
         player = $("#player-name").val();
-        if (player.length == 0)
+        if (player.length <= 0 || player.length > 10)
             alert("请输入长度在(0,10)之间名字");
         else
         {
