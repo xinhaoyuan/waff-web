@@ -64,21 +64,24 @@ print("Content-type: text/xml\n\n");
 print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 print("<output>");
 
+our $gfx_id = 0;
+
 while ($i <= $#output)
 {
     my $head = $output[$i];
     ++ $i;
     
-    if ($head eq "gfx")
+    if ($head eq "bg-gfx")
     {
         if ($i <= $#output)
         {
             my $gfxopt = $output[$i];
-            my $gfxcmd = "gm convert " . $gfxopt . " $contentdir/$player.scene.jpg";
+            my $gfxcmd = "gm convert " . $gfxopt . " $contentdir/$player.bg." . $gfx_id . ".jpg";
             ++ $i;
             system($gfxcmd);
 
-            print("<with-scene>1</with-scene>");
+            print("<ctl type=\"bg-gfx\">" . $gfx_id . "</ctl>");
+            ++ $gfx_id;
         }
     }
     elsif ($head eq "text")

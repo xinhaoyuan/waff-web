@@ -4,6 +4,8 @@ var tag;
 function resetScene()
 {
     $(document).clearQueue("waff");
+    $("#log-wrapper").removeClass("pause");
+    $("#bg-container").empty();
 }
 
 function doAction(succ)
@@ -25,6 +27,7 @@ function doAction(succ)
             d = new Date();
             tag = String(d.getTime());
             var tag_now = tag;
+            var loading_img = 0;
             
             $(xml).find("ctl").each(function (i) {
                 if ($(this).attr("type") == "text")
@@ -35,7 +38,7 @@ function doAction(succ)
                         $("#log-container").append(obj);
                         obj.fadeIn(500);
                         setTimeout(function () {
-                            if (tag_now === tag)
+                            if (tag_now == tag)
                             {
                                 $(document).dequeue("waff");
                             }
@@ -47,7 +50,7 @@ function doAction(succ)
                     $(document).queue("waff", function () {
                         $("#log-wrapper").addClass("pause");
                         $(document).one("click", function() {
-                            if (tag_now === tag)
+                            if (tag_now == tag)
                             {
                                 $("#log-container").html("");
                                 $("#log-wrapper").removeClass("pause");
@@ -56,17 +59,37 @@ function doAction(succ)
                         });
                     });
                 }
-            });
+                else if ($(this).attr("type") == "bg-gfx")
+                {
+                    var id = parseInt($(this).text());
+                    var bgimg = $("<img id='bg-gfx-" + id + "' class='bg-gfx' style='position: absolute; display:none'/>");
+                    $("#bg-container").append(bgimg);
+                    bgimg.load(function () {
+                        if (-- loading_img == 0)
+                        {
+                            alert("!");
+                            succ();
+                            $(document).dequeue("waff");
+                        }
+                    });
+                    ++ loading_img;
+                    bgimg.attr("src", "/content/" + player + ".bg." + id + ".jpg?" + tag)
 
-            if ($(xml).find("with-scene").text() != "0")
-            {
-                
-                $("#scene-img").load(function () {
-                    succ();
-                    $(document).dequeue("waff");
-                });
-                $("#scene-img").attr("src", "/content/" + player + ".scene.jpg?" + tag);
-            }            
+                    $(document).queue("waff", function () {
+                        if (tag_now == tag)
+                        {
+                            if (id > 0)
+                            {
+                                $("#bg-gfx-" + (id - 1)).fadeOut(500);
+                            }
+                            bgimg.fadeIn(500, function () {
+                                if (tag_now == tag)
+                                    $(document).dequeue("waff");
+                            });
+                        }
+                    });
+                }
+            });
         },
     });
 }

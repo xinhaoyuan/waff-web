@@ -1,5 +1,5 @@
 (with (dict)
-      ("Output" "gfx\nscene_000.jpg\n")
+      ("Output" "bg-gfx\nscene_000.jpg\n")
       ("Output" "text\n恍惚间好像看到了\n")
       ("Output" "text\n一个奇怪的人影\n")
       ("Output" "pause\n")
@@ -9,6 +9,7 @@
       ("Output" "text\n\"今天是个好天气啊\"\n")
       ("Output" "text\n\我说\n")
       ("Output" "pause\n")
+      ("Output" "bg-gfx\nscene_000.jpg -colorspace Gray\n")
       ("Output" "text\n\<span style='font-size: 20pt'>\"放尼码的屁啊！！！！！！！\"</span>\n")
 
       )
