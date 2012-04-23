@@ -67,7 +67,6 @@ function doAction(succ)
                     bgimg.load(function () {
                         if (-- loading_img == 0)
                         {
-                            alert("!");
                             succ();
                             $(document).dequeue("waff");
                         }
