@@ -1,4 +1,5 @@
 var player = "";
+var mod = "";
 var tag;
 
 function resetScene()
@@ -10,11 +11,12 @@ function resetScene()
 
 function doAction(succ)
 {
+    $("#loading-screen").clearQueue().show();
     $.ajax({
         url: "/cgi-bin/waff.pl",
         type: "GET",
         dataType: "xml",
-        data: { "player" : player },
+        data: { "player" : player, "mod" : mod },
         error:
         function(XMLHttpRequest,textStatus,errorThrown){
             alert(textStatus);
@@ -68,11 +70,12 @@ function doAction(succ)
                         if (-- loading_img == 0)
                         {
                             succ();
+                            $("#loading-screen").fadeOut(500);
                             $(document).dequeue("waff");
                         }
                     });
                     ++ loading_img;
-                    bgimg.attr("src", "/content/" + player + ".bg." + id + ".jpg?" + tag)
+                    bgimg.attr("src", "/content/" + mod + "/" + player + ".bg." + id + ".jpg?" + tag)
 
                     $(document).queue("waff", function () {
                         if (tag_now == tag)
@@ -100,6 +103,10 @@ $(document).ready(function () {
             alert("请输入长度在(0,10)之间名字");
         else
         {
+            var chk = $('input[name="mod"]:checked');
+            if (chk.size() == 0)
+                mod = "startup";
+            else mod = chk.val(); 
             $("#login-container").hide();
             doAction(function () {
                 $("#scene-container").show();

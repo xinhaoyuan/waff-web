@@ -3,6 +3,7 @@
 use File::Basename;
 use Cwd 'abs_path';
 use File::Temp;
+use File::Path qw(make_path remove_tree);
 
 if (length($ENV{'QUERY_STRING'}) > 0){
     $buffer = $ENV{'QUERY_STRING'};
@@ -15,12 +16,14 @@ if (length($ENV{'QUERY_STRING'}) > 0){
 }
 
 our @output;
+our $mod       = basename($in{"mod"});
 our $waffbin   = abs_path("waff");
-our $gamedir   = abs_path("../data");
+our $gamedir   = abs_path("../data/" . $mod);
 our $action    = "play";
 our $player    = $in{"player"};
-our $contentdir= abs_path("../content");
+our $contentdir= abs_path("../content/". $mod);
 
+make_path($contentdir);
 chdir $gamedir;
 
 our $err = 0;
@@ -64,6 +67,7 @@ print("Content-type: text/xml\n\n");
 print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 print("<output>");
 
+print @output;
 our $gfx_id = 0;
 
 while ($i <= $#output)

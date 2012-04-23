@@ -17,7 +17,16 @@
 
       <div class="ocenter">
         <div>
-          <div id="login-container"><div>你的名字</div><input id="player-name" type="text"/><button type="button" id="button-start">开始</button></div>
+          <div id="login-container">
+            <form>
+              <div>名字（自动存档）</div>
+              <div><input id="player-name" type="text"/></div>
+              <div>剧本</div>
+              <div><input name="mod" type="radio" id="mod-startup-demo" value="startup"/><label for="mod-startup-demo">STARTUP DEMO</label></div>
+            </form>
+            <button type="button" id="button-start">开始</button>
+          </div>
+
           <div style="position: relative; display: inline-block; display: none;" id="scene-container">
             <div style="height: 600px; width: 800px;" id="bg-container">
             </div>
@@ -38,6 +47,13 @@
         </div>
       </div>
 
+    </div>
+    <div id="loading-screen" style="display: none; position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
+      <div class="ocenter">
+        <div style="padding: 20px; display: inline-block; background: #ffaa00; color: black; border-radius: 10px; ">
+          <img src="img/loading.gif" style="vertical-align: middle; margin-right: 10px;"/><div style="display: inline-block; vertical-align: middle">正在载入</div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
