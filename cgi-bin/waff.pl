@@ -60,7 +60,8 @@ if ($err == 0)
 
 our $i = 0;
 
-print("Content-type: text/html\n\n");
+print("Content-type: text/xml\n\n");
+print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 print("<output>");
 
 while ($i <= $#output)
@@ -73,7 +74,7 @@ while ($i <= $#output)
         if ($i <= $#output)
         {
             my $gfxopt = $output[$i];
-            my $gfxcmd = "gm convert " . $gfxopt . " $contentdir/$player.scene.png";
+            my $gfxcmd = "gm convert " . $gfxopt . " $contentdir/$player.scene.jpg";
             ++ $i;
             system($gfxcmd);
 
@@ -86,9 +87,14 @@ while ($i <= $#output)
         {
             my $line = $output[$i];
             ++ $i;
-            print("<text><![CDATA[" . $line . "]]></text>");
+            print("<ctl type=\"text\"><![CDATA[" . $line . "]]></ctl>");
         }
     }
+    elsif ($head eq "pause")
+    {
+        print("<ctl type=\"pause\"><![CDATA[" . $line . "]]></ctl>");
+    }
+
 }
 print("</output>");
 

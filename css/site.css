@@ -1,0 +1,12 @@
+body {
+    background: black;
+    color: white;
+}
+
+div.vcenter { display: inline-block; height: 100%; white-space: nowrap; }
+div.vcenter > * { display: inline-block; vertical-align: middle; white-space: normal; }
+div.vcenter:after { display: inline-block; height: 100%; vertical-align: middle; content: ""; }
+
+div.ocenter { height: 100%; white-space: nowrap; text-align: center; }
+div.ocenter > * { display: inline-block; text-align: left; vertical-align: middle; white-space: normal; }
+div.ocenter:after { display: inline-block; height: 100%; vertical-align: middle; content: ""; }

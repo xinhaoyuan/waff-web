@@ -2,7 +2,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Web Adventure For Fun</title>
+    <link href="css/site.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/site.js"></script>
+    <style>
+      #pause-indicator { display: none; }
+      #log-wrapper.pause #pause-indicator { display: block; }
+      #log-container p { margin: 10px; }
+    </style>
   </head>
   <body>
+    <div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
+
+      <div class="ocenter">
+        <div>
+          <div id="login-container"><input id="player-name" type="text"/><button type="button" id="button-start">开始</button></div>
+          <div style="position: relative; display: inline-block; display: none;" id="scene-container">
+            <img style="max-height: 600px; min-height: 400px; max-width: 800px;" id="scene-img"/>
+            
+            <div style="position: absolute; bottom: 10px; height: 100px; left: 10px; right: 10px; border-radius: 5px; padding: 5px; opacity: 0.7; background: white; color: darkred; text-align: left;" id="log-wrapper">
+              <div style="position: absolute; top: 5px; bottom: 5px; left: 5px; right: 5px; overflow-y: scroll; overflow-x: hidden; word-wrap: break-word; text-align: left;">
+                <div class="vcenter">
+                  <div id="log-container">
+                  </div>
+                </div>
+              </div>
+
+              <div style="position: absolute; bottom: 10px; right: 25px; background: red; color: white; padding: 5px; border-radius: 5px;" id="pause-indicator">
+                单击继续
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </body>
 </html>
