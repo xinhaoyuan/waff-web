@@ -76,7 +76,7 @@ while ($i <= $#output)
         if ($i <= $#output)
         {
             my $gfxopt = $output[$i];
-            my $gfxcmd = "gm convert " . $gfxopt . " $contentdir/$player.bg." . $gfx_id . ".jpg";
+            my $gfxcmd = "convert " . $gfxopt . " $contentdir/$player.bg." . $gfx_id . ".jpg";
             ++ $i;
             system($gfxcmd);
 
