@@ -77,7 +77,7 @@ function doAction(succ)
                         }
                         else
                         {
-                            $("#loading-progress").text(String(Math.round(loading_img * 100.0 / img_count)));
+                            $("#loading-progress").text(String(Math.round((img_count - loading_img) * 100.0 / img_count)));
                         }
                     });
                     ++ loading_img;
