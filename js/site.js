@@ -6,7 +6,6 @@ function resetScene()
 {
     $(document).clearQueue("waff");
     $("#log-wrapper").removeClass("pause");
-    $("#bg-container").empty();
 }
 
 function doAction(succ)
@@ -34,6 +33,7 @@ function doAction(succ)
             var img_count = 0;
             
             $(xml).find("ctl").each(function (i) {
+
                 if ($(this).attr("type") == "text")
                 {
                     var text = $(this).text();
@@ -49,6 +49,7 @@ function doAction(succ)
                         }, 1000);
                     });
                 }
+
                 else if ($(this).attr("type") == "pause")
                 {
                     $(document).queue("waff", function () {
@@ -63,38 +64,72 @@ function doAction(succ)
                         });
                     });
                 }
-                else if ($(this).attr("type") == "bg-gfx")
+                else if ($(this).attr("type") == "sleep")
+                {
+                    $(document).queue("waff", function () {
+                        setTimeout(function () {
+                            if (tag_now == tag)
+                            {
+                                $(document).dequeue("waff");
+                            }
+                        }, parseInt($(this).text()));
+                    });
+                }
+
+                else if ($(this).attr("type") == "gfx")
                 {
                     var id = parseInt($(this).text());
-                    var bgimg = $("<img id='bg-gfx-" + id + "' class='bg-gfx' style='position: absolute; display:none'/>");
-                    $("#bg-container").append(bgimg);
-                    bgimg.load(function () {
+                    var img = $("<img id='img-" + id + "'/>");
+                    $("#img-prepare-container").append(img);
+                    img.load(function () {
                         if (-- loading_img == 0)
                         {
+                            // All images loaded
                             succ();
                             $("#loading-screen").fadeOut(500);
                             $(document).dequeue("waff");
                         }
                         else
                         {
+                            // Update the loading progress
                             $("#loading-progress").text(String(Math.round((img_count - loading_img) * 100.0 / img_count)));
                         }
                     });
                     ++ loading_img;
                     ++ img_count;
-                    bgimg.attr("src", "/content/" + mod + "/" + player + ".bg." + id + ".jpg?" + tag);
+                    img.attr("src", "/content/" + mod + "/" + player + "." + id + ".jpg?" + tag);
+                }
 
+                else if ($(this).attr("type") == "hide-img")
+                {
+                    var id = parseInt($(this).text());
                     $(document).queue("waff", function () {
                         if (tag_now == tag)
                         {
-                            if (id > 0)
-                            {
-                                $("#bg-gfx-" + (id - 1)).fadeOut(500);
-                            }
-                            bgimg.fadeIn(500, function () {
+                            var img = $("#img-" + id);
+                            img.fadeOut(500, function() {
                                 if (tag_now == tag)
-                                    $(document).dequeue("waff");
+                                {
+                                    img.detach();
+                                    $("#img-prepare-container").append(img);
+                                }
                             });
+                            $(document).dequeue("waff");
+                        }
+                    });
+                }
+
+                else if ($(this).attr("type") == "show-img")
+                {
+                    var id = parseInt($(this).text());
+                    var layer = $(this).attr("layer");
+                    $(document).queue("waff", function () {
+                        if (tag_now == tag)
+                        {
+                            var img = $("#img-" + id).hide().detach();
+                            $("#layer-" + layer).append(img);
+                            img.fadeIn(500);
+                            $(document).dequeue("waff");
                         }
                     });
                 }
@@ -104,6 +139,10 @@ function doAction(succ)
 }
 
 $(document).ready(function () {
+    $(document).keydown(function() { 
+        $(document).click();
+    });
+
     $("#button-start").click(function () {
         player = $("#player-name").val();
         if (player.length <= 0 || player.length >= 10)

@@ -7,12 +7,22 @@
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="js/site.js"></script>
     <style type="text/css">
+      
       #pause-indicator { display: none; }
+
       #log-wrapper.pause #pause-indicator { display: block; }
+
       #log-container p { margin: 10px; }
+
+      #layer-bg { position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; }
+      #layer-bg > * { position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; }
+
     </style>
   </head>
   <body>
+    <div id="img-prepare-container" style="display: none;">
+    </div>
+
     <div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
 
       <div class="ocenter">
@@ -27,8 +37,14 @@
             <button type="button" id="button-start">开始</button>
           </div>
 
-          <div style="position: relative; display: inline-block; display: none;" id="scene-container">
-            <div style="height: 600px; width: 800px;" id="bg-container">
+          <div style="position: relative; width: 800px; height: 600px; display: inline-block; display: none;" id="scene-container">
+            <div id="layer-bg">
+            </div>
+
+            <div id="layer-people">
+            </div>
+
+            <div id="layer-fg">
             </div>
             
             <div style="position: absolute; bottom: 10px; height: 100px; left: 10px; right: 10px; border-radius: 5px; padding: 5px; opacity: 0.7; background: white; color: darkred; text-align: left;" id="log-wrapper">

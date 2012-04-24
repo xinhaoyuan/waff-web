@@ -67,27 +67,48 @@ print("Content-type: text/xml\n\n");
 print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 print("<output>");
 
-print @output;
-our $gfx_id = 0;
+our $img_id = 0;
 
 while ($i <= $#output)
 {
     my $head = $output[$i];
     ++ $i;
     
-    if ($head eq "bg-gfx")
+    if ($head eq "gfx")
     {
         if ($i <= $#output)
         {
             my $gfxopt = $output[$i];
-            my $gfxcmd = "convert " . $gfxopt . " $contentdir/$player.bg." . $gfx_id . ".jpg";
+            my $gfxcmd = "convert " . $gfxopt . " $contentdir/$player." . $img_id . ".jpg";
             ++ $i;
             system($gfxcmd);
 
-            print("<ctl type=\"bg-gfx\">" . $gfx_id . "</ctl>");
-            ++ $gfx_id;
+            print("<ctl type=\"gfx\">" . $img_id . "</ctl>");
+            ++ $img_id;
         }
     }
+
+    elsif ($head eq "show-img")
+    {
+        if ($i + 1 <= $#output)
+        {
+            my $layer = $output[$i];
+            my $id = $output[$i + 1];
+            $i += 2;
+            print("<ctl type=\"show-img\" layer=\"" . $layer . "\">" . $id . "</ctl>");
+        }
+    }
+
+    elsif ($head eq "hide-img")
+    {
+        if ($i <= $#output)
+        {
+            my $id = $output[$i];
+            ++ $i;
+            print("<ctl type=\"hide-img\">" . $id . "</ctl>");
+        }
+    }
+
     elsif ($head eq "text")
     {
         if ($i <= $#output)
@@ -97,11 +118,21 @@ while ($i <= $#output)
             print("<ctl type=\"text\"><![CDATA[" . $line . "]]></ctl>");
         }
     }
+    
     elsif ($head eq "pause")
     {
         print("<ctl type=\"pause\"><![CDATA[" . $line . "]]></ctl>");
     }
 
+    elsif ($head eq "sleep")
+    {
+        if ($i <= $#output)
+        {
+            my $ms = $output[$i];
+            ++ $i;
+            print("<ctl type=\"sleep\">" . $ms . "</ctl>");
+        }
+    }
 }
 print("</output>");
 
