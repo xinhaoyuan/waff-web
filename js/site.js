@@ -11,6 +11,7 @@ function resetScene()
 
 function doAction(succ)
 {
+    $("#loading-progress").text("0");
     $("#loading-screen").clearQueue().show();
     $.ajax({
         url: "/cgi-bin/waff.pl",
@@ -30,6 +31,7 @@ function doAction(succ)
             tag = String(d.getTime());
             var tag_now = tag;
             var loading_img = 0;
+            var img_count = 0;
             
             $(xml).find("ctl").each(function (i) {
                 if ($(this).attr("type") == "text")
@@ -73,9 +75,14 @@ function doAction(succ)
                             $("#loading-screen").fadeOut(500);
                             $(document).dequeue("waff");
                         }
+                        else
+                        {
+                            $("#loading-progress").text(String(Math.round(loading_img * 100.0 / img_count)));
+                        }
                     });
                     ++ loading_img;
-                    bgimg.attr("src", "/content/" + mod + "/" + player + ".bg." + id + ".jpg?" + tag)
+                    ++ img_count;
+                    bgimg.attr("src", "/content/" + mod + "/" + player + ".bg." + id + ".jpg?" + tag);
 
                     $(document).queue("waff", function () {
                         if (tag_now == tag)
