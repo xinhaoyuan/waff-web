@@ -153,10 +153,26 @@ $(document).ready(function () {
             if (chk.size() == 0)
                 mod = "startup";
             else mod = chk.val(); 
+
+            $.cookies.set("name", player);
+            $.cookies.set("mod", mod);
+
             $("#login-container").hide();
             doAction(function () {
                 $("#scene-container").show();
             });
         }
     });
+
+    $("#player-name").val($.cookies.get("name"));
+    var lastmod = $.cookies.get("mod");
+    if (lastmod)
+    {
+        var modchk = $('input[name="mod"][value="' + lastmod + '"]');
+        if (modchk.size() == 1)
+        {
+            alert(lastmod);
+            modchk.attr("checked", "checked");
+        }
+    }
 });

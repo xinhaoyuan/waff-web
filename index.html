@@ -5,9 +5,12 @@
     <title>Web Adventure For Fun</title>
     <link href="css/site.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookies.2.2.0.min.js"></script>
     <script type="text/javascript" src="js/site.js"></script>
     <style type="text/css">
       
+      .tip { color: #aaa; font-size: 10pt; }
+
       #pause-indicator { display: none; }
 
       #log-wrapper.pause #pause-indicator { display: block; }
@@ -28,13 +31,13 @@
       <div class="ocenter">
         <div>
           <div id="login-container">
-            <form>
-              <div>名字（自动存档）</div>
-              <div><input id="player-name" type="text"/></div>
-              <div>剧本</div>
-              <div><input name="mod" type="radio" id="mod-startup-demo" value="startup"/><label for="mod-startup-demo">STARTUP DEMO</label></div>
-            </form>
-            <button type="button" id="button-start">开始</button>
+            <div>输入名字：<span class="tip">每个名字都有固定的自动存档</span></div>
+            <div style="padding: 3px; background: white; border-radius: 5px; margin: 3px; color: black; "><div><input id="player-name" type="text" style="border: 0; padding: 0; margin: 0; width: 100%; background: transparetn; color: inherit; "/></div></div>
+            <div>剧本：</div>
+            <div><input name="mod" type="radio" id="mod-startup-demo" value="startup" checked="checked" /><label for="mod-startup-demo">STARTUP DEMO</label></div>
+            <div style="margin-top: 10px; text-align: right;">
+              <button type="button" id="button-start">开始</button>
+            </div>
           </div>
 
           <div style="position: relative; width: 800px; height: 600px; display: inline-block; display: none;" id="scene-container">
