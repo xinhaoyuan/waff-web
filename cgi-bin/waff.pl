@@ -20,8 +20,18 @@ our $mod       = basename($in{"mod"});
 our $waffbin   = abs_path("waff");
 our $gamedir   = abs_path("../data/" . $mod);
 our $action    = "play";
-our $player    = $in{"player"};
+our $player    = basename($in{"player"});
 our $contentdir= abs_path("../content/". $mod);
+
+if (length($player) < 2 || length($player) > 20)
+{
+    $player = "demo";
+}
+
+if (length($mod) < 2 || length($mod) > 20)
+{
+    $mod = "startup";
+}
 
 make_path($contentdir);
 chdir $gamedir;

@@ -145,8 +145,8 @@ $(document).ready(function () {
 
     $("#button-start").click(function () {
         player = $("#player-name").val();
-        if (player.length <= 0 || player.length >= 10)
-            alert("请输入长度在(0,10)之间名字");
+        if (player.length < 2 || player.length > 20)
+            alert("请输入长度在[2,20]之间名字");
         else
         {
             var chk = $('input[name="mod"]:checked');
@@ -171,7 +171,6 @@ $(document).ready(function () {
         var modchk = $('input[name="mod"][value="' + lastmod + '"]');
         if (modchk.size() == 1)
         {
-            alert(lastmod);
             modchk.attr("checked", "checked");
         }
     }
