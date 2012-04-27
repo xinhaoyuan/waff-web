@@ -6,6 +6,8 @@ function resetScene()
 {
     $(document).clearQueue("waff");
     $("#log-wrapper").removeClass("pause");
+    $("#log-container").html("");
+    $(".game-img").remove();
 }
 
 function doAction(succ)
@@ -64,6 +66,23 @@ function doAction(succ)
                         });
                     });
                 }
+
+                else if ($(this).attr("type") == "next")
+                {
+                    $(document).queue("waff", function () {
+                        $("#log-wrapper").addClass("pause");
+                        $(document).one("click", function() {
+                            if (tag_now == tag)
+                            {
+                                $("#scene-container").fadeOut(500, function() {
+                                    if (tag_now == tag)
+                                        doAction();
+                                });
+                            }
+                        });
+                    });
+                }
+
                 else if ($(this).attr("type") == "sleep")
                 {
                     $(document).queue("waff", function () {
@@ -79,13 +98,14 @@ function doAction(succ)
                 else if ($(this).attr("type") == "gfx")
                 {
                     var id = parseInt($(this).text());
-                    var img = $("<img id='img-" + id + "'/>");
+                    var img = $("<img id='img-" + id + "' class='game-img'/>");
                     $("#img-prepare-container").append(img);
                     img.load(function () {
                         if (-- loading_img == 0)
                         {
                             // All images loaded
-                            succ();
+                            if (succ) succ();
+                            $("#scene-container").show();
                             $("#loading-screen").fadeOut(500);
                             $(document).dequeue("waff");
                         }
@@ -158,9 +178,7 @@ $(document).ready(function () {
             $.cookies.set("mod", mod);
 
             $("#login-container").hide();
-            doAction(function () {
-                $("#scene-container").show();
-            });
+            doAction();
         }
     });
 

@@ -143,6 +143,11 @@ while ($i <= $#output)
             print("<ctl type=\"sleep\">" . $ms . "</ctl>");
         }
     }
+
+    elsif ($head eq "next")
+    {
+        print("<ctl type=\"next\"/>");
+    }
 }
 print("</output>");
 
